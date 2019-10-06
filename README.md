@@ -1,2 +1,1 @@
-# JCommon
-Collection of commonly used java classes
+A collection of utilities to access external properties and execution environment details 

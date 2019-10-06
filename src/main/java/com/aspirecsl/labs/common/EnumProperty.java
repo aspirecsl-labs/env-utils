@@ -3,6 +3,8 @@ package com.aspirecsl.labs.common;
 import java.util.Optional;
 import java.util.function.Function;
 
+import static java.lang.System.getProperty;
+
 /**
  * Represents an <tt>Enum</tt> with a value.
  *
@@ -76,7 +78,7 @@ public interface EnumProperty<P extends Enum<P> & EnumProperty<P, T>, T> {
    * Maps the specified <tt>value</tt> into its corresponding <tt>enumType</tt> and returns an
    * <tt>Optional</tt> representing the <tt>enumType</tt>
    *
-   * <p>Additionally if the <tt>sanitise</tt> flag is set to <tt>True</tt>> then the value is
+   * <p>Additionally if the <tt>sanitise</tt> flag is set to <tt>True</tt> then the value is
    * <em>sanitised</em> into a canonical form using the {@link #sanitiser()} implementation
    *
    * @param enumType the type of the <tt>Enum</tt> property that has a value
@@ -101,5 +103,23 @@ public interface EnumProperty<P extends Enum<P> & EnumProperty<P, T>, T> {
       }
     }
     return Optional.empty();
+  }
+
+  /**
+   * Returns an enum constant that represents the value of a system property corresponding to the
+   * specified <tt>key</tt>.
+   *
+   * <p>If the value in the system property doesn't match any enum value then the <em>default</em>
+   * enum constant is returned
+   *
+   * @param key property key
+   * @return enum constant representing the value of the property; or the <em>default</em> enum
+   *     value if the property doesnt match any enum value
+   * @throws UnsupportedOperationException when no enum constant matches the property value and no
+   *     default enum constant is defined
+   */
+  static <P extends Enum<P> & EnumProperty<P, String>>
+      EnumProperty<P, String> enumerateSystemProperty(Class<P> type, String key) {
+    return fromValue(type, getProperty(key)).orElse(type.getEnumConstants()[0].getDefault());
   }
 }
