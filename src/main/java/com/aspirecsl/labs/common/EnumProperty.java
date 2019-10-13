@@ -32,19 +32,6 @@ public interface EnumProperty<P extends Enum<P> & EnumProperty<P, T>, T> {
   T value();
 
   /**
-   * Returns the <em>default</em> enumeration constant for this property.
-   *
-   * <p>Implementations that wish to offer a default value must override this method
-   *
-   * <p>This implementation always throws an {@code UnsupportedOperationException}.
-   *
-   * @return the <em>default</em> enumeration constant for this property
-   */
-  default P getDefault() {
-    throw new UnsupportedOperationException();
-  }
-
-  /**
    * Returns a <tt>Function</tt> that always returns its input argument.
    *
    * <p>Implementations that expect the value to be in a canonical form should override this method.
@@ -118,8 +105,8 @@ public interface EnumProperty<P extends Enum<P> & EnumProperty<P, T>, T> {
    * @throws UnsupportedOperationException when no enum constant matches the property value and no
    *     default enum constant is defined
    */
-  static <P extends Enum<P> & EnumProperty<P, String>>
-      EnumProperty<P, String> enumerateSystemProperty(Class<P> type, String key) {
-    return fromValue(type, getProperty(key)).orElse(type.getEnumConstants()[0].getDefault());
+  static <P extends Enum<P> & EnumProperty<P, String>> EnumProperty<P, String> ofSystemProperty(
+      Class<P> type, String key) {
+    return fromValue(type, getProperty(key)).orElse(null);
   }
 }

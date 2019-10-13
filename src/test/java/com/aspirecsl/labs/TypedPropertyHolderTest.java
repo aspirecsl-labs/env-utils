@@ -9,6 +9,11 @@ import static com.aspirecsl.labs.TypedPropertyHolderTest.StaticTestProperties.St
 import static com.aspirecsl.labs.TypedPropertyHolderTest.StaticTestProperties.StaticTestProperty.UNSET_PROPERTY;
 import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Unit test class for {@link TypedPropertyHolder}
+ *
+ * @author anoopr
+ */
 public class TypedPropertyHolderTest {
 
   @Test
@@ -38,7 +43,8 @@ public class TypedPropertyHolderTest {
   public void getsDefaultValue_WhenPropertyIsNotSet() {
     final StaticTestProperties staticTestProperties = new StaticTestProperties();
 
-    assertThat(staticTestProperties.getOrDefault(UNSET_PROPERTY, "DEFAULT VALUE")).contains("DEFAULT VALUE");
+    assertThat(staticTestProperties.getOrDefault(UNSET_PROPERTY, "DEFAULT VALUE"))
+        .contains("DEFAULT VALUE");
   }
 
   static class RuntimeTestProperties
